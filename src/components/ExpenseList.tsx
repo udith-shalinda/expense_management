@@ -7,7 +7,10 @@ export type TExpense = {
   _id: string;
   description: string;
   amount: number;
-  type: number;
+  type: {
+    _id: string;
+    name: string;
+  };
   date: string;
 };
 
@@ -26,7 +29,7 @@ const ExpenseList: React.FC<TExpenseListProps> = ({ expenses, loading }) => {
                 <div className='flex-1'>
                   <p className='text-lg font-medium text-gray-900'>{expense.description}</p>
                   <p className='text-sm text-gray-600'>Amount: {expense.amount} LKR</p>
-                  <p className='text-sm text-gray-600'>Type: {expense.type}</p>
+                  <p className='text-sm text-gray-600'>Type: {expense.type.name}</p>
                   <p className='text-sm text-gray-600'>
                     Date: {new Date(expense.date).toLocaleDateString()}
                   </p>
