@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useQuery } from '@/hooks/useQuery';
+import { API_ROUTES } from '@/utils/constants';
 
-type TExpense = {
+export type TExpense = {
   _id: string;
   description: string;
   amount: number;
@@ -9,25 +11,37 @@ type TExpense = {
   date: string;
 };
 
-const ExpenseList = () => {
-  const [expenses, setExpenses] = useState<TExpense[]>([]);
+type TExpenseListProps = { expenses?: TExpense[]; loading: boolean };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/expenses")
-      .then((res) => setExpenses(res.data));
-  }, []);
-
+const ExpenseList: React.FC<TExpenseListProps> = ({ expenses, loading }) => {
   return (
-    <div>
-      <h2>Your Expenses</h2>
-      <ul>
-        {expenses.map((expense) => (
-          <li key={expense._id}>
-            {expense.description} - {expense.amount} LKR - {expense.type} -{" "}
-            {expense.date}
-          </li>
-        ))}
+    <div className='container mx-auto p-4'>
+      <ul className='space-y-4'>
+        {!loading && Array.isArray(expenses) && expenses.length > 0
+          ? expenses.map((expense) => (
+              <li
+                key={expense._id}
+                className='bg-white shadow-md rounded-lg p-4 flex justify-between items-center'
+              >
+                <div className='flex-1'>
+                  <p className='text-lg font-medium text-gray-900'>{expense.description}</p>
+                  <p className='text-sm text-gray-600'>Amount: {expense.amount} LKR</p>
+                  <p className='text-sm text-gray-600'>Type: {expense.type}</p>
+                  <p className='text-sm text-gray-600'>
+                    Date: {new Date(expense.date).toLocaleDateString()}
+                  </p>
+                </div>
+              </li>
+            ))
+          : !loading && (
+              <h2 className='text-center text-lg font-semibold text-gray-700'>
+                No Records Available
+              </h2>
+            )}
+
+        {loading && (
+          <h2 className='text-center text-lg font-semibold text-blue-500'>Loading....</h2>
+        )}
       </ul>
     </div>
   );

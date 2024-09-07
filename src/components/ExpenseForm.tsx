@@ -6,16 +6,12 @@ import { API_ROUTES } from '@/utils/constants';
 import { useQuery } from '@/hooks/useQuery';
 import { useState } from 'react';
 
-interface ExpenseFormProps {
-  onSubmit: () => void;
-}
-
-interface IType {
+export interface IType {
   _id: string;
   name: string;
 }
 
-const ExpenseForm: React.FC<ExpenseFormProps> = () => {
+const ExpenseForm: React.FC = () => {
   const { loading, mutate } = useMutation({ url: API_ROUTES.EXPENSES.CREATE });
   const { loading: loadingTypes, data } = useQuery({ url: API_ROUTES.TYPES.ALL });
   const [popup, setPopup] = useState({ show: false, message: '', success: false });
