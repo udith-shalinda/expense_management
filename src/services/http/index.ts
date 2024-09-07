@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ACCESS_TOKEN } from '@/utils/constants';
 
 const http = axios.create({
-  baseURL: 'http://localhost:3000/dev/api',
+  baseURL: 'https://0eqs3hdoxk.execute-api.us-east-1.amazonaws.com/dev/api',
   timeout: 30000,
 });
 
