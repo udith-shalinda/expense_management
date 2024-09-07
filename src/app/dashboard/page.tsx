@@ -1,12 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@/hooks/useQuery';
-import Dashboard from '../../components/Dashboard';
 import { withAuth } from '@/hoc/withAuth/withAuth';
 import { API_ROUTES } from '@/utils/constants';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
-import { TExpense } from '@/components/Expense';
 import { IType } from '@/components/ExpenseForm';
 
 export type TGroupedByType = {

@@ -9,7 +9,7 @@ const ViewExpenses = () => {
   const [selectedType, setSelectedType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { loading: loadingTypes, data: types } = useQuery({ url: API_ROUTES.TYPES.ALL });
+  const { data: types } = useQuery({ url: API_ROUTES.TYPES.ALL });
   const {
     data: expenses,
     loading,
@@ -62,7 +62,9 @@ const ViewExpenses = () => {
             className='px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           >
             {Array.isArray(types) &&
-              types?.map((type: IType) => <option value={type._id} label={type.name} />)}
+              types?.map((type: IType) => (
+                <option key={type._id} value={type._id} label={type.name} />
+              ))}
           </select>
         </div>
       </div>
@@ -70,7 +72,9 @@ const ViewExpenses = () => {
       <div className='container mx-auto p-4'>
         <ul className='space-y-4'>
           {!loading && Array.isArray(expenses) && expenses.length > 0
-            ? expenses.map((expense: TExpense) => <Expense expense={expense} retry={retry} />)
+            ? expenses.map((expense: TExpense) => (
+                <Expense key={expense._id} expense={expense} retry={retry} />
+              ))
             : !loading && (
                 <h2 className='text-center text-lg font-semibold text-gray-700'>
                   No Records Available

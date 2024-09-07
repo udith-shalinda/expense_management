@@ -1,6 +1,5 @@
-import { Formik, Form, Field, ErrorMessage, FormikErrors } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { useMutation } from '@/hooks/useMutate';
 import { ACCESS_TOKEN, API_ROUTES, ROUTES } from '@/utils/constants';
 import { useRouter } from 'next/navigation';

@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useQuery } from '@/hooks/useQuery';
 import { API_ROUTES, HTTP_TYPES } from '@/utils/constants';
 import { useMutation } from '@/hooks/useMutate';
 

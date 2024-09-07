@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ACCESS_TOKEN, HTTP_TYPES } from '@/utils/constants';
+import { HTTP_TYPES } from '@/utils/constants';
 import http from '@/services/http';
 
 interface IProps {

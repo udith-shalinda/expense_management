@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useAppSelector } from '../useRedux';
 import { ROUTES } from '@/utils/constants';
 
-export function withUnAuth<P>(WrappedComponent: React.ComponentType<any>) {
+export function withUnAuth(WrappedComponent: React.ComponentType<any>) {
   const VisibityControlled: React.FC = (props) => {
     const { authenticated } = useAppSelector((store: any) => store.user);
     const router = useRouter();

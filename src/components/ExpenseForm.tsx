@@ -1,6 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { useMutation } from '@/hooks/useMutate';
 import { API_ROUTES } from '@/utils/constants';
 import { useQuery } from '@/hooks/useQuery';
@@ -140,7 +139,9 @@ const ExpenseForm: React.FC = () => {
                   className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                 >
                   {Array.isArray(data) &&
-                    data?.map((type: IType) => <option value={type._id} label={type.name} />)}
+                    data?.map((type: IType) => (
+                      <option key={type._id} value={type._id} label={type.name} />
+                    ))}
                 </Field>
                 <ErrorMessage name='type' component='div' className='text-red-500 text-sm mt-1' />
               </div>
