@@ -1,15 +1,15 @@
 'use client';
 import { useEffect, useState } from 'react';
-import ExpenseList, { TExpense } from '../../../components/ExpenseList';
+import Expense, { TExpense } from '../../../components/Expense';
 import { useQuery } from '@/hooks/useQuery';
 import { API_ROUTES } from '@/utils/constants';
 import { IType } from '@/components/ExpenseForm';
 
 const ViewExpenses = () => {
-  const { loading: loadingTypes, data: types } = useQuery({ url: API_ROUTES.TYPES.ALL });
-  const [selectedType, setSelectedType] = useState(Array.isArray(types) ? types[0]._id : '');
+  const [selectedType, setSelectedType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
+  const { loading: loadingTypes, data: types } = useQuery({ url: API_ROUTES.TYPES.ALL });
   const {
     data: expenses,
     loading,
@@ -66,7 +66,22 @@ const ViewExpenses = () => {
           </select>
         </div>
       </div>
-      <ExpenseList loading={loading} expenses={expenses as TExpense[]} />
+
+      <div className='container mx-auto p-4'>
+        <ul className='space-y-4'>
+          {!loading && Array.isArray(expenses) && expenses.length > 0
+            ? expenses.map((expense: TExpense) => <Expense expense={expense} retry={retry} />)
+            : !loading && (
+                <h2 className='text-center text-lg font-semibold text-gray-700'>
+                  No Records Available
+                </h2>
+              )}
+
+          {loading && (
+            <h2 className='text-center text-lg font-semibold text-blue-500'>Loading....</h2>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

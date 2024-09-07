@@ -19,6 +19,7 @@ export const API_ROUTES = {
   EXPENSES: {
     CREATE: 'expenses',
     ALL: 'expenses',
+    DELETE: 'expenses/[id]',
   },
   TYPES: {
     ALL: 'types',
