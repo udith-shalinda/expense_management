@@ -13,13 +13,15 @@ export const ACCESS_TOKEN = 'ACCESS_TOKEN';
 export const API_ROUTES = {
   USER: {
     LOGIN: 'auth/login',
-    SIGN_UP: 'auth/sign-up',
-    WHO_AM_I: 'auth/who-am-i',
+    SIGN_UP: 'auth/signUp',
+    WHO_AM_I: 'auth/whoAmI',
   },
   EXPENSES: {
     CREATE: 'expenses',
     ALL: 'expenses',
     DELETE: 'expenses/[id]',
+    GROUPED_SUM_BY_TYPE:
+      'expenses/getGroupedExpensesByType?startDate=[startDate]&endDate=[endDate]',
   },
   TYPES: {
     ALL: 'types',
