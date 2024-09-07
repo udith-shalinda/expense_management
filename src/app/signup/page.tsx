@@ -1,12 +1,13 @@
-"use client";
-import AuthForm from "../../components/AuthForm";
+'use client';
+import { withUnAuth } from '@/hoc/withUnauth/withUnauth';
+import AuthForm from '../../components/AuthForm';
 
 const Signup = () => {
   return (
     <div>
-      <AuthForm mode="signup" />
+      <AuthForm mode='signup' />
     </div>
   );
 };
 
-export default Signup;
+export default withUnAuth(Signup);

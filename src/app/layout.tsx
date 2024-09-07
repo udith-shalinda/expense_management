@@ -1,39 +1,21 @@
-import "./globals.css";
-import Link from "next/link";
+'use client';
+import { Provider } from 'react-redux';
+import './globals.css';
+import Link from 'next/link';
+import { store } from '@/store/store';
 
-export const metadata = {
-  title: "Expense Tracker",
-  description: "Track your personal expenses",
+const metadata = {
+  title: 'Expense Tracker',
+  description: 'Track your personal expenses',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>
-        <nav>
-          <ul>
-            <li>
-              <Link href="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link href="/add-expense">Add Expense</Link>
-            </li>
-            <li>
-              <Link href="/view-expenses">View Expenses</Link>
-            </li>
-            <li>
-              <Link href="/login">Login</Link>
-            </li>
-            <li>
-              <Link href="/signup">Signup</Link>
-            </li>
-          </ul>
-        </nav>
-        <main>{children}</main>
+        <Provider store={store}>
+          <main>{children}</main>
+        </Provider>
       </body>
     </html>
   );
