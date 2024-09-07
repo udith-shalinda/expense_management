@@ -1,4 +1,6 @@
-import Dashboard from "../../components/Dashboard";
+'use client';
+import Dashboard from '../../components/Dashboard';
+import { withAuth } from '@/hoc/withAuth/withAuth';
 
 const DashboardPage = () => {
   return (
@@ -9,4 +11,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default withAuth(DashboardPage);
