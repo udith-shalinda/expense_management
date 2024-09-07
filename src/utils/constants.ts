@@ -16,9 +16,18 @@ export const API_ROUTES = {
     SIGN_UP: 'auth/sign-up',
     WHO_AM_I: 'auth/who-am-i',
   },
+  EXPENSES: {
+    CREATE: 'expenses',
+    ALL: 'expenses',
+  },
+  TYPES: {
+    ALL: 'types',
+  },
 };
 
 export const ROUTES = {
-  LOGIN: 'login',
-  DASHBOARD: 'dashboard',
+  LOGIN: '/login',
+  DASHBOARD: '/dashboard',
+  ALL_EXPENSES: '/dashboard/all',
+  ADD_EXPENSES: '/dashboard/add-expense',
 };
