@@ -17,6 +17,7 @@ const useQuery = ({ url, notFetchOnLoad, customHeaders = {} }: IProps) => {
     if (!notFetchOnLoad) {
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   const fetchData = async () => {

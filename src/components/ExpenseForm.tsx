@@ -28,7 +28,7 @@ const ExpenseForm: React.FC = () => {
 
   useEffect(() => {
     !typesLoaded && dispatch(loadTypes());
-  }, []);
+  }, [typesLoaded, dispatch]);
 
   const handleSubmit = async (
     values: {

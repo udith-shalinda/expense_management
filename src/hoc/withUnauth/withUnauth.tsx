@@ -12,6 +12,7 @@ export function withUnAuth(WrappedComponent: React.ComponentType<any>) {
 
     useEffect(() => {
       checkPermission();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authenticated]);
 
     const checkPermission = () => {

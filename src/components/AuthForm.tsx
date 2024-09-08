@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useMutation } from '@/hooks/useMutate';
 import { ACCESS_TOKEN, API_ROUTES, ROUTES } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@/hooks/useRedux';
 
 interface AuthFormProps {
   mode: 'login' | 'signup';
@@ -12,6 +13,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   const { mutate, loading } = useMutation<{ token: string }, unknown>({
     url: mode === 'login' ? API_ROUTES.USER.LOGIN : API_ROUTES.USER.SIGN_UP,
   });
+  const { loading: userLoading } = useAppSelector((store: any) => store.user);
   const router = useRouter();
 
   const validationSchema = Yup.object({
@@ -26,8 +28,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     try {
       const response = await mutate(values);
 
-      if (response.success) {
-        localStorage.setItem(ACCESS_TOKEN, response?.data?.token!);
+      if (response.success && response?.data?.token) {
+        localStorage.setItem(ACCESS_TOKEN, response?.data?.token);
         router.push(ROUTES.DASHBOARD);
       } else {
         setFieldError('email', 'Invalid Credentials');
@@ -82,7 +84,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                 type='submit'
                 className='w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50'
               >
-                {loading ? 'Logging in...' : mode === 'login' ? 'Login' : 'Sign up'}
+                {userLoading
+                  ? 'loading...'
+                  : loading
+                  ? 'Logging in...'
+                  : mode === 'login'
+                  ? 'Login'
+                  : 'Sign up'}
               </button>
             </Form>
           )}

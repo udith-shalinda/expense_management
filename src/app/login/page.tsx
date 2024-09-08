@@ -11,7 +11,7 @@ const Login = () => {
 
   useEffect(() => {
     !authenticated && dispatch(checkUser());
-  }, []);
+  }, [authenticated, dispatch]);
 
   return (
     <div>

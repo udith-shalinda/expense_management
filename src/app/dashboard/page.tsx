@@ -78,6 +78,7 @@ const DashboardPage = () => {
         timeOut && clearTimeout(timeOut);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   return (
@@ -110,10 +111,10 @@ const DashboardPage = () => {
           />
         </div>
       </div>
-      {!chartData ? (
-        <p>No Data found for the selected date range...</p>
-      ) : loading ? (
+      {loading ? (
         <p>Loading chart...</p>
+      ) : !chartData ? (
+        <p>No Data found for the selected date range...</p>
       ) : (
         <div className='w-2/3 m-auto'>
           <Pie
