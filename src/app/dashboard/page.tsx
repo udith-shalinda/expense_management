@@ -68,12 +68,9 @@ const DashboardPage = () => {
     }
   }, [data]);
 
-  let timeOut: any;
-
   useEffect(() => {
     if (startDate && endDate) {
-      timeOut && clearTimeout(timeOut);
-      timeOut = setTimeout(() => {
+      const timeOut = setTimeout(() => {
         retry();
       }, 1000);
 

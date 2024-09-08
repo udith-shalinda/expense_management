@@ -28,11 +28,8 @@ const ViewExpenses = () => {
     notFetchOnLoad: true,
   });
 
-  let timeOut: any;
-
   useEffect(() => {
-    timeOut && clearTimeout(timeOut);
-    timeOut = setTimeout(() => {
+    const timeOut = setTimeout(() => {
       selectedType && retry();
     }, 500);
 

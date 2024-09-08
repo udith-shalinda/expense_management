@@ -20,7 +20,6 @@ const initialState: TypeState = {
 };
 
 export const loadTypes = createAsyncThunk('user/loadTypes', async () => {
-  console.log('here');
   const res = await http.get(API_ROUTES.TYPES.ALL);
   return res.data;
 });
