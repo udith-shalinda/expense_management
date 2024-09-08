@@ -76,12 +76,11 @@ const ExpenseForm: React.FC = () => {
             >
               {popup.message}
             </p>
-            {/* Close Icon */}
             <button
               onClick={closePopup}
               className='absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none'
             >
-              &#x2715; {/* Close icon (X) */}
+              &#x2715;
             </button>
           </div>
         </div>

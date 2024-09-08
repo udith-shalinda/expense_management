@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@/hooks/useQuery';
 import { withAuth } from '@/hoc/withAuth/withAuth';
 import { API_ROUTES } from '@/utils/constants';
@@ -27,8 +27,9 @@ const DashboardPage = () => {
   const [endDate, setEndDate] = useState(
     new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toISOString().split('T')[0],
   );
+  const [isShowPopup, setIsShowPopup] = useState(false);
 
-  const { data, loading, retry } = useQuery({
+  const { data, loading, retry } = useQuery<TGroupedByType>({
     notFetchOnLoad: true,
     url: API_ROUTES.EXPENSES.GROUPED_SUM_BY_TYPE.replace('[startDate]', startDate).replace(
       '[endDate]',
@@ -44,6 +45,10 @@ const DashboardPage = () => {
     }
     return colors;
   };
+
+  const totalPercentage = useMemo(() => {
+    return data?.totalAmount && data?.totalAmount > 0 ? data?.totalAmount / 100 : 0;
+  }, [data]);
 
   useEffect(() => {
     if (data) {
@@ -66,6 +71,14 @@ const DashboardPage = () => {
         ],
       });
     }
+
+    if (totalPercentage >= 90) {
+      setIsShowPopup(true);
+    }
+
+    setTimeout(() => {
+      closePopup();
+    }, 5000);
   }, [data]);
 
   useEffect(() => {
@@ -81,9 +94,31 @@ const DashboardPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
+  const closePopup = () => {
+    setIsShowPopup(false);
+  };
+
   return (
     <div className='container mx-auto p-4'>
       <h2 className='text-center text-lg font-semibold mb-4'>Expense Breakdown</h2>
+      {isShowPopup && (
+        <div className='fixed inset-0 flex items-center justify-center z-50'>
+          <div
+            className={`bg-white p-4 rounded shadow-md relative border-red-500
+            border-l-4`}
+          >
+            <p className={`text-lg font-semibold text-orange-500`}>
+              {`Total expenses reached ${totalPercentage.toLocaleString()}%`}
+            </p>
+            <button
+              onClick={closePopup}
+              className='absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none'
+            >
+              &#x2715;
+            </button>
+          </div>
+        </div>
+      )}
       <div className='flex justify-center space-x-4 mb-4'>
         <div>
           <label htmlFor='startDate' className='block text-sm font-medium text-gray-700'>

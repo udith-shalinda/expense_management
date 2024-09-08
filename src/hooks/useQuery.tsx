@@ -8,8 +8,8 @@ interface IProps {
   customHeaders?: object;
 }
 
-const useQuery = ({ url, notFetchOnLoad, customHeaders = {} }: IProps) => {
-  const [data, setData] = useState<unknown | null>(null);
+const useQuery = <T,>({ url, notFetchOnLoad, customHeaders = {} }: IProps) => {
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown | null>(null);
 
