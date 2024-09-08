@@ -5,7 +5,7 @@ import { withAuth } from '@/hoc/withAuth/withAuth';
 import { API_ROUTES } from '@/utils/constants';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
-import { IType } from '@/components/ExpenseForm';
+import { IType } from '@/store/types';
 
 export type TGroupedByType = {
   groupedExpenses: {
@@ -83,8 +83,6 @@ const DashboardPage = () => {
     }
   }, [startDate, endDate]);
 
-  if (loading) return <p>Loading chart...</p>;
-
   return (
     <div className='container mx-auto p-4'>
       <h2 className='text-center text-lg font-semibold mb-4'>Expense Breakdown</h2>
@@ -117,25 +115,29 @@ const DashboardPage = () => {
       </div>
       {!chartData ? (
         <p>No Data found for the selected date range...</p>
+      ) : loading ? (
+        <p>Loading chart...</p>
       ) : (
-        <Pie
-          data={chartData}
-          options={{
-            plugins: {
-              legend: {
-                display: true,
-                position: 'right',
-              },
-              tooltip: {
-                callbacks: {
-                  label: function (tooltipItem) {
-                    return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+        <div className='w-2/3 m-auto'>
+          <Pie
+            data={chartData}
+            options={{
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'right',
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (tooltipItem) {
+                      return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                    },
                   },
                 },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       )}
     </div>
   );

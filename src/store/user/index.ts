@@ -2,14 +2,6 @@ import http from '@/services/http';
 import { API_ROUTES } from '@/utils/constants';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface IDepartment {
-  id: string;
-  name: string;
-}
-export interface IRole {
-  id: string;
-  name: string;
-}
 export interface IUser {
   _id: string;
   email?: string;

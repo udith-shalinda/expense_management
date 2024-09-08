@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAppSelector } from '../useRedux';
 import { ROUTES } from '@/utils/constants';
+import { useAppSelector } from '@/hooks/useRedux';
 
 export function withUnAuth(WrappedComponent: React.ComponentType<any>) {
   const VisibityControlled: React.FC = (props) => {

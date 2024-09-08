@@ -6,7 +6,7 @@ interface IProps {
   url: string;
 }
 
-const useMutation = ({ url }: IProps) => {
+const useMutation = <T, E>({ url }: IProps) => {
   const [loading, setLoading] = useState(false);
 
   const mutate = async (body: object, method?: HTTP_TYPES, customHeaders?: object) => {
@@ -22,7 +22,7 @@ const useMutation = ({ url }: IProps) => {
       setLoading(false);
       return {
         success: true,
-        data: response?.data,
+        data: response?.data as T,
         errors: null,
       };
     } catch (err) {
@@ -30,7 +30,7 @@ const useMutation = ({ url }: IProps) => {
       return {
         success: false,
         data: null,
-        errors: err,
+        errors: err as E,
       };
     }
   };

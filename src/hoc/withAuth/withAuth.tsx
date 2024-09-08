@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { ROUTES } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
-import { useAppSelector } from '../useRedux';
+import { useAppSelector } from '@/hooks/useRedux';
 
 export function withAuth(WrappedComponent: React.ComponentType<any>, roles?: string[]) {
   const VisibityControlled: React.FC = (props) => {

@@ -9,7 +9,7 @@ interface AuthFormProps {
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
-  const { mutate, loading } = useMutation({
+  const { mutate, loading } = useMutation<{ token: string }, unknown>({
     url: mode === 'login' ? API_ROUTES.USER.LOGIN : API_ROUTES.USER.SIGN_UP,
   });
   const router = useRouter();
@@ -25,9 +25,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   ) => {
     try {
       const response = await mutate(values);
-      localStorage.setItem(ACCESS_TOKEN, response.data.token);
 
-      router.push(ROUTES.DASHBOARD);
+      if (response.success) {
+        localStorage.setItem(ACCESS_TOKEN, response?.data?.token!);
+        router.push(ROUTES.DASHBOARD);
+      } else {
+        setFieldError('email', 'Invalid Credentials');
+        setFieldError('password', 'Invalid Credentials');
+        alert(`${mode === 'login' ? 'Login' : 'Signup'} failed`);
+      }
     } catch (error) {
       setFieldError('email', 'Invalid Credentials');
       setFieldError('password', 'Invalid Credentials');

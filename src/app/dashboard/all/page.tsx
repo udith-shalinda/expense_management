@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import Expense, { TExpense } from '../../../components/Expense';
 import { useQuery } from '@/hooks/useQuery';
 import { API_ROUTES } from '@/utils/constants';
-import { IType } from '@/components/ExpenseForm';
+import { withAuth } from '@/hoc/withAuth/withAuth';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { IType, loadTypes } from '@/store/types';
 
 const ViewExpenses = () => {
   const [selectedType, setSelectedType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const { loaded: typesLoaded, types } = useAppSelector((store) => store.types);
+  const dispatch = useAppDispatch();
 
-  const { data: types } = useQuery({ url: API_ROUTES.TYPES.ALL });
   const {
     data: expenses,
     loading,
@@ -30,7 +33,7 @@ const ViewExpenses = () => {
   useEffect(() => {
     timeOut && clearTimeout(timeOut);
     timeOut = setTimeout(() => {
-      retry();
+      selectedType && retry();
     }, 500);
 
     return () => {
@@ -41,6 +44,10 @@ const ViewExpenses = () => {
   useEffect(() => {
     Array.isArray(types) && setSelectedType(types[0]._id);
   }, [types]);
+
+  useEffect(() => {
+    !typesLoaded && dispatch(loadTypes());
+  }, []);
 
   return (
     <div>
@@ -90,4 +97,4 @@ const ViewExpenses = () => {
   );
 };
 
-export default ViewExpenses;
+export default withAuth(ViewExpenses);

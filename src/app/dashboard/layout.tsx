@@ -1,5 +1,5 @@
 'use client';
-import { useAppDispatch } from '@/hoc/useRedux';
+import { useAppDispatch } from '@/hooks/useRedux';
 import { logout } from '@/store/user';
 import { ROUTES } from '@/utils/constants';
 import Link from 'next/link';
@@ -22,9 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Link
                 href='/dashboard'
                 className={
-                  pathname === ROUTES.DASHBOARD
-                    ? 'text-yellow-400 underline'
-                    : 'hover:text-yellow-400'
+                  pathname === ROUTES.DASHBOARD ? 'text-yellow-400' : 'hover:text-yellow-400'
                 }
               >
                 Dashboard Overview
@@ -34,9 +32,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Link
                 href='/dashboard/all'
                 className={
-                  pathname === ROUTES.ALL_EXPENSES
-                    ? 'text-yellow-400 underline'
-                    : 'hover:text-yellow-400'
+                  pathname === ROUTES.ALL_EXPENSES ? 'text-yellow-400' : 'hover:text-yellow-400'
                 }
               >
                 All Expenses
@@ -46,9 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Link
                 href='/dashboard/add-expense'
                 className={
-                  pathname === ROUTES.ADD_EXPENSES
-                    ? 'text-yellow-400 underline'
-                    : 'hover:text-yellow-400'
+                  pathname === ROUTES.ADD_EXPENSES ? 'text-yellow-400' : 'hover:text-yellow-400'
                 }
               >
                 Add Expense

@@ -2,17 +2,21 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@/hooks/useMutate';
 import { API_ROUTES } from '@/utils/constants';
-import { useQuery } from '@/hooks/useQuery';
-import { useState } from 'react';
-
-export interface IType {
-  _id: string;
-  name: string;
-}
+import { useEffect, useState } from 'react';
+import { IType, loadTypes } from '@/store/types';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 const ExpenseForm: React.FC = () => {
-  const { loading, mutate } = useMutation({ url: API_ROUTES.EXPENSES.CREATE });
-  const { loading: loadingTypes, data } = useQuery({ url: API_ROUTES.TYPES.ALL });
+  const { loading, mutate } = useMutation<unknown, { data: { message: string } }>({
+    url: API_ROUTES.EXPENSES.CREATE,
+  });
+  const {
+    loaded: typesLoaded,
+    types,
+    loading: loadingTypes,
+  } = useAppSelector((store) => store.types);
+  const dispatch = useAppDispatch();
+
   const [popup, setPopup] = useState({ show: false, message: '', success: false });
 
   const validationSchema = Yup.object({
@@ -21,6 +25,10 @@ const ExpenseForm: React.FC = () => {
     date: Yup.date().required('Required'),
     type: Yup.string().required('Required'),
   });
+
+  useEffect(() => {
+    !typesLoaded && dispatch(loadTypes());
+  }, []);
 
   const handleSubmit = async (
     values: {
@@ -36,9 +44,11 @@ const ExpenseForm: React.FC = () => {
       setPopup({ show: true, message: 'Expense submitted successfully!', success: true });
       resetForm(); // Reset the form on success
     } else {
+      console.log({ res });
+
       setPopup({
         show: true,
-        message: 'Failed to submit expense. Please try again.',
+        message: res.errors?.data?.message ?? 'Failed to submit expense. Please try again.',
         success: false,
       });
     }
@@ -85,7 +95,7 @@ const ExpenseForm: React.FC = () => {
             description: '',
             amount: 1,
             date: '',
-            type: Array.isArray(data) ? data[0]._id : '',
+            type: Array.isArray(types) ? types[0]._id : '',
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -138,8 +148,8 @@ const ExpenseForm: React.FC = () => {
                   name='type'
                   className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                 >
-                  {Array.isArray(data) &&
-                    data?.map((type: IType) => (
+                  {Array.isArray(types) &&
+                    types?.map((type: IType) => (
                       <option key={type._id} value={type._id} label={type.name} />
                     ))}
                 </Field>
