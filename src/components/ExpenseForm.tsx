@@ -44,8 +44,6 @@ const ExpenseForm: React.FC = () => {
       setPopup({ show: true, message: 'Expense submitted successfully!', success: true });
       resetForm(); // Reset the form on success
     } else {
-      console.log({ res });
-
       setPopup({
         show: true,
         message: res.errors?.data?.message ?? 'Failed to submit expense. Please try again.',
