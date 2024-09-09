@@ -60,16 +60,18 @@ const DashboardPage = () => {
         ) ?? [];
       const colors = generateRandomColors(expenseTypes.length);
 
-      setChartData({
-        labels: expenseTypes as string[],
-        datasets: [
-          {
-            data: percentages,
-            backgroundColor: colors,
-            hoverBackgroundColor: colors,
-          },
-        ],
-      });
+      if (expenseTypes.length > 0) {
+        setChartData({
+          labels: expenseTypes as string[],
+          datasets: [
+            {
+              data: percentages,
+              backgroundColor: colors,
+              hoverBackgroundColor: colors,
+            },
+          ],
+        });
+      }
     }
 
     if (totalPercentage >= 90) {
@@ -149,7 +151,7 @@ const DashboardPage = () => {
       {loading ? (
         <p>Loading chart...</p>
       ) : !chartData ? (
-        <p>No Data found for the selected date range...</p>
+        <p className='text-center'>No Data found for the selected date range...</p>
       ) : (
         <div className='w-2/3 m-auto'>
           <Pie

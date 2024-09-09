@@ -2,14 +2,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@/hooks/useMutate';
 import { ACCESS_TOKEN, API_ROUTES, ROUTES } from '@/utils/constants';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAppSelector } from '@/hooks/useRedux';
+import Link from 'next/link';
 
 interface AuthFormProps {
   mode: 'login' | 'signup';
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
+  const pathname = usePathname();
+
   const { mutate, loading } = useMutation<{ token: string }, unknown>({
     url: mode === 'login' ? API_ROUTES.USER.LOGIN : API_ROUTES.USER.SIGN_UP,
   });
@@ -92,6 +95,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                   ? 'Login'
                   : 'Sign up'}
               </button>
+
+              <div>
+                <Link
+                  href={pathname === ROUTES.LOGIN ? ROUTES.SIGN_UP: ROUTES.LOGIN}
+                  className={
+                    pathname === ROUTES.DASHBOARD ? 'text-yellow-400' : 'hover:text-yellow-400'
+                  }
+                >
+                  {pathname === ROUTES.LOGIN ? 'Create an account': 'Already have an account?'}
+                </Link>
+              </div>
             </Form>
           )}
         </Formik>

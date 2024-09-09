@@ -30,6 +30,7 @@ export const API_ROUTES = {
 
 export const ROUTES = {
   LOGIN: '/login',
+  SIGN_UP: '/signup',
   DASHBOARD: '/dashboard',
   ALL_EXPENSES: '/dashboard/all',
   ADD_EXPENSES: '/dashboard/add-expense',
